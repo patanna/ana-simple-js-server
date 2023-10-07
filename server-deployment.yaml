@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: myapp-deployment
+spec:
+  replicas: 3  # Set the desired number of replicas
+  template:
+    metadata:
+      labels:
+        app: nodejs-server
+    spec:
+      containers:
+        - name: nodejs-server
+          image: return-host-node:latest  # Replace with your Node.js image
+          ports:
+            - containerPort: 80
+          env:
+            - name: NODENAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: spec.nodeName  # Set the environment variable with the worker node's name
+
