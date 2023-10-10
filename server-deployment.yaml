@@ -1,17 +1,21 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: myapp-deployment
+  name: node-js-server
 spec:
   replicas: 3  # Set the desired number of replicas
+  selector:
+    matchLabels:
+      app: node-js-server
   template:
     metadata:
       labels:
-        app: nodejs-server
+        app: node-js-server
     spec:
       containers:
-        - name: nodejs-server
-          image: return-host-node:latest  # Replace with your Node.js image
+        - name: node-js-server
+          image: mihailo34/node-js-server:latest
+          imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 80
           env:

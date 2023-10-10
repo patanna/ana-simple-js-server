@@ -1,0 +1,34 @@
+
+Execution 1:
+
+curl: (28) Failed to connect to node-js-service port 80 after 130687 ms: Couldn't connect to server
+
+Execution 2:
+curl: (6) Could not resolve host: node-js-service
+
+Execution 3:
+curl: (6) Could not resolve host: node-js-service
+
+Execution 4:
+curl: (6) Could not resolve host: node-js-service
+
+Execution 5:
+curl: (6) Could not resolve host: node-js-service
+
+Execution 6:
+curl: (6) Could not resolve host: node-js-service
+
+Execution 7:
+^C
+Execution 8:
+^C
+Execution 9:
+Pod Hostname: node-js-server-8669bb7484-snf6b
+Worker Node: raspberrypi
+Execution 10:
+^C
+Execution 11:
+^C
+Execution 12:
+^C
+Execution 13:
