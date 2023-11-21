@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: node-js-server
-          image: mihailo34/node-js-server:latest
+          image: mihailo34/simple-nodejs-server:latest
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 80
