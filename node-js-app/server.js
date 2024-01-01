@@ -16,8 +16,8 @@ const server = http.createServer((req, res) => {
   res.end(`Pod Hostname: ${hostname}\nWorker Node: ${nodeName}`);
 });
 
-// Listen on port 80
-const PORT = 80;
+// Listen on port 8080
+const PORT = 8080;
 server.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });
