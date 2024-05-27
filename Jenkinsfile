@@ -41,7 +41,9 @@ pipeline {
 
     stage('Get the image hash') {
       steps{
-        echo "Image hash is: "
+        git branch: 'main', credentialsId: 'ana-git-userpass', url: 'https://github.com/patanna/ana-simple-nodejs-server-manifests/'
+        echo "Image hash is: ${GIT_BRANCH}_${GIT_COMMIT}"
+        sh "sed -i 's/newTag:.*/newTag: ${GIT_BRANCH}_${GIT_COMMIT}/ kustomize.yaml"
       }
     }
 
