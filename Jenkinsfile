@@ -36,10 +36,12 @@ pipeline {
     }
 
     stage('Push image') {
+      steps {
         docker.withRegistry('https://registry.hub.docker.com', 'git') {
         app.push("patanna/simple-nodejs-app")            
         app.push("latest")        
-    }    
+      }    
+    }
     }
 
   }
