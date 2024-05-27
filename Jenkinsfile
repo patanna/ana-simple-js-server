@@ -39,5 +39,23 @@ pipeline {
       }
     }
 
+    stage('Get the image hash') {
+      steps{
+        echo "Image hash is: "
+      }
+    }
+
+
+
+
+    stage('Deploy with ArgoCD') {
+      steps{
+          echo "Changed the image hash to: "
+
+          echo "Pushed the configs to the repo"
+
+          echo "Deployed with ArgoCD"
+      }
+    }
   }
 }
