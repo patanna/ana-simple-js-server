@@ -24,7 +24,7 @@ pipeline {
   stages {
     stage('Checkout Code') {
             steps {
-                git branch: 'main', credentialsId: 'ana-git-userpass', url: 'https://github.com/patanna/ana-simple-js-server/'
+              git branch: 'main', credentialsId: 'ana-git-userpass', url: 'https://github.com/patanna/ana-simple-js-server/'
             }
     }
     stage('Build-Push-Docker-Image') {
@@ -41,7 +41,7 @@ pipeline {
 
     stage('Get the image hash') {
       steps{
-        git branch: 'main', credentialsId: 'ana-git-userpass', url: 'https://github.com/patanna/ana-simple-nodejs-server-manifests/'
+        git branch: 'main', credentialsId: 'ana-git-userpass', url: 'https://github.com/patanna/ana-simple-nodejs-server-manifests.git'
         echo "Image hash is: ${GIT_BRANCH}_${GIT_COMMIT}"
         sh "sed -i 's/newTag:.*/newTag: ${GIT_BRANCH}_${GIT_COMMIT}/ kustomize.yaml"
       }
