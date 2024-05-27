@@ -21,11 +21,12 @@ pipeline {
         '''
     }
 
-    environment {
-      ArgoApp = 'ANA-SIMPLE-NODE-JS'
   }
 
+  environment {
+    ArgoApp = 'ANA-SIMPLE-NODE-JS'
   }
+
   stages {
     stage('Checkout Code') {
             steps {
@@ -79,5 +80,6 @@ pipeline {
           echo "Deployed with ArgoCD"
       }
     }
+  }
   }
 }
