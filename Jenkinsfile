@@ -32,7 +32,7 @@ pipeline {
         container('docker') {
           script{
             docker.withRegistry('https://docker.io', 'ana-docker'){
-            docker.build('"patanna/simple-nodejs"').push('latest')
+            docker.build('patanna/simple-nodejs-app').push('latest')
           }
           }
         }
