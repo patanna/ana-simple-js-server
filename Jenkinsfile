@@ -31,9 +31,7 @@ pipeline {
       steps {
         container('docker') {
           script{
-          docker.withRegistry('https://docker.mycorp.com/', 'ana-docker') {
-            docker.build('"patanna/simple-nodejs-app"').push('latest')
-          }
+            docker.withRegistry('https://docker.mycorp.com/', 'ana-docker').build('"patanna/simple-nodejs-app"').push('latest')
           }
         }
       }
