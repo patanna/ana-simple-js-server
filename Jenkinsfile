@@ -30,8 +30,8 @@ pipeline {
     stage('Build-Push-Docker-Image') {
       steps {
         container('docker') {
-          docker withRegistry('https://docker.mycorp.com/', 'ana-docker'){
           script{
+            docker.withRegistry('https://docker.mycorp.com/', 'ana-docker'){
             docker.build('"patanna/simple-nodejs-app"').push('latest')
           }
           }
