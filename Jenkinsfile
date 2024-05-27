@@ -84,9 +84,10 @@ pipeline {
         withCredentials([string(credentialsId: 'argoCD-jwt', variable: 'ARGOCD_AUTH_TOKEN')]) {
           sh '''
               export ARGOCD_SERVER=${ARGOCD_SERVER}
-              curl --insecure -o /usr/local/bin/argocd https://${ARGOCD_SERVER}/download/argocd-linux-amd64
-              argocd app sync ${ArgoApp} --insecure
-              argocd app wait ${ArgoApp} --insecure
+              curl --insecure -o ./argocd https://${ARGOCD_SERVER}/download/argocd-linux-amd64
+              chmod +x ./argocd
+              ./argocd app sync ${ArgoApp} --insecure
+              ./argocd app wait ${ArgoApp} --insecure
               '''
           echo "Deployed with ArgoCD"
       }
