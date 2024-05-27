@@ -31,7 +31,7 @@ pipeline {
   stages {
     stage('Checkout Code') {
             steps {
-              git branch: 'main', credentialsId: 'ana-git-userpass', url: 'https://github.com/patanna/ana-simple-js-server/'
+              git branch: 'main', credentialsId: 'ana-git-userpass', url: 'https://github.com/patanna/ana-simple-js-server.git'
             }
     }
     stage('Build-Push-Docker-Image') {
