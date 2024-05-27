@@ -71,7 +71,7 @@ pipeline {
 
     stage('Deploy with ArgoCD') {
       steps{
-        withCredentials([usernamePassword(credentialsId: 'argoCD-jwt', passwordVariable: 'ARGOCD_AUTH_TOKEN')]) {
+        withCredentials([string(credentialsId: 'argoCD-jwt', variable: 'ARGOCD_AUTH_TOKEN')]) {
           sh '''
               export ARGOCD_SERVER=${ARGOCD_SERVER}
               curl --insecure -o /usr/local/bin/argocd https://${ARGOCD_SERVER}/download/argocd-linux-amd64
