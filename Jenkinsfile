@@ -24,7 +24,7 @@ pipeline {
   stages {
     stage('Checkout Code') {
             steps {
-                git branch: 'main', url:'https://github.com/patanna/ana-simple-js-server.git'
+                git branch: 'main', credentialsId: 'ana-git-userpass', url: 'https://github.com/patanna/ana-simple-js-server/'
             }
     }
     stage('Build-Push-Docker-Image') {
@@ -32,7 +32,7 @@ pipeline {
         container('docker') {
           script{
             docker.withRegistry('https://docker.io', 'ana-docker'){
-            docker.build('"patanna/simple-nodejs-app"').push('latest')
+            docker.build('"patanna/simple-nodejs"').push('latest')
           }
           }
         }
