@@ -27,21 +27,13 @@ pipeline {
                 git branch: 'main', url:'https://github.com/patanna/ana-simple-js-server.git'
             }
     }
-    stage('Build-Docker-Image') {
+    stage('Build-Push-Docker-Image') {
       steps {
         container('docker') {
-          sh 'docker build -t patanna/node:12.22.9-slim .'
+          def myApp = docker.build "patanna/simple-nodejs-app"
+          myApp.push()
         }
       }
-    }
-
-    stage('Push image') {
-      steps {
-        docker.withRegistry('https://registry.hub.docker.com', 'git') {
-        app.push("patanna/simple-nodejs-app")            
-        app.push("latest")        
-      }    
-    }
     }
 
   }
