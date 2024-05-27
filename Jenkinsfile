@@ -76,9 +76,6 @@ pipeline {
       }
     }
 
-
-
-
     stage('Deploy with ArgoCD') {
       steps{
         withCredentials([string(credentialsId: 'argoCD-jwt', variable: 'ARGOCD_AUTH_TOKEN')]) {
