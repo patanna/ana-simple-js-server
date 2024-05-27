@@ -20,6 +20,11 @@ pipeline {
               path: /var/run/docker.sock    
         '''
     }
+
+    environment {
+      ArgoApp = 'ANA-SIMPLE-NODE-JS'
+  }
+
   }
   stages {
     stage('Checkout Code') {
@@ -64,10 +69,13 @@ pipeline {
 
     stage('Deploy with ArgoCD') {
       steps{
-          echo "Changed the image hash to: "
-
-          echo "Pushed the configs to the repo"
-
+        withCredentials([usernamePassword(credentialsId: 'argoCD-jwt', passwordVariable: 'ARGOCD_AUTH_TOKEN')]) {
+          sh '''
+              export ARGOCD_SERVER=https://10.131.1.231:32766
+              curl -sSL -o /usr/local/bin/argocd https://${ARGOCD_SERVER}/download/argocd-linux-amd64
+              argocd app sync ${ArgoApp} 
+              argocd app wait ${ArgoApp}
+              '''
           echo "Deployed with ArgoCD"
       }
     }
