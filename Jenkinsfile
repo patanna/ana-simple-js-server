@@ -30,8 +30,10 @@ pipeline {
     stage('Build-Push-Docker-Image') {
       steps {
         container('docker') {
+          script{
           def myApp = docker.build "patanna/simple-nodejs-app"
           myApp.push()
+          }
         }
       }
     }
