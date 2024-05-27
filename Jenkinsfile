@@ -58,10 +58,20 @@ pipeline {
             git commit -m "Automated commit by Jenkins"
             '''
         withCredentials([usernamePassword(credentialsId: 'ana-git-userpass', passwordVariable: 'GIT_PASSWORD', usernameVariable: 'GIT_USERNAME')]) {
-          sh '''
-              git remote set-url origin https://${GIT_USERNAME}:${GIT_PASSWORD}@github.com/patanna/ana-simple-nodejs-server-manifests.git
-              git push origin main
-              '''
+          script {
+              def commitStatus = sh(script: """
+                  git config user.name "Jenkins"
+                  git config user.email "jenkins@example.com"
+                  git add .
+                  git commit -m "Automated commit by Jenkins"
+              """, returnStatus: true)
+
+              if (commitStatus != 0) {
+                  echo "Nothing to commit, working tree clean"
+              } else {
+                  echo "Changes committed successfully"
+              }
+          }
         }
       }
     }
