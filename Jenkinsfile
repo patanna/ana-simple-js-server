@@ -25,6 +25,7 @@ pipeline {
 
   environment {
     ArgoApp = 'ANA-SIMPLE-NODE-JS'
+    ARGOCD_SERVER = '10.131.1.231:32766'
   }
 
   stages {
@@ -72,10 +73,10 @@ pipeline {
       steps{
         withCredentials([usernamePassword(credentialsId: 'argoCD-jwt', passwordVariable: 'ARGOCD_AUTH_TOKEN')]) {
           sh '''
-              export ARGOCD_SERVER=https://10.131.1.231:32766
-              curl -sSL -o /usr/local/bin/argocd https://${ARGOCD_SERVER}/download/argocd-linux-amd64
-              argocd app sync ${ArgoApp} 
-              argocd app wait ${ArgoApp}
+              export ARGOCD_SERVER=${ARGOCD_SERVER}
+              curl --insecure -o /usr/local/bin/argocd https://${ARGOCD_SERVER}/download/argocd-linux-amd64
+              argocd app sync ${ArgoApp} --insecure
+              argocd app wait ${ArgoApp} --insecure
               '''
           echo "Deployed with ArgoCD"
       }
