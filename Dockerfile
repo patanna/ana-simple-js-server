@@ -5,7 +5,7 @@ FROM node:12.22.9-slim
 WORKDIR /app
 
 # Copy package.json and package-lock.json (if available) to the working directory
-COPY package*.json ./
+COPY package.json ./
 
 # Install dependencies
 RUN npm install
