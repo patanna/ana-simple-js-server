@@ -32,7 +32,7 @@ pipeline {
         container('docker') {
           script{
             withDockerRegistry(credentialsId: 'ana-docker'){
-            docker.build('patanna/simple-nodejs-app').push('latest')
+            docker.build('patanna/simple-nodejs-app').push("${GIT_BRANCH}_${GIT_COMMIT}")
           }
           }
         }
