@@ -58,6 +58,7 @@ pipeline {
                   git config user.email "jenkins@example.com"
                   git add .
                   git commit -m "Automated commit by Jenkins"
+                  git push"
               """, returnStatus: true)
 
               if (commitStatus != 0) {
