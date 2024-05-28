@@ -51,12 +51,6 @@ pipeline {
         git branch: 'main', credentialsId: 'ana-git-userpass', url: 'https://github.com/patanna/ana-simple-nodejs-server-manifests.git'
         echo "Image hash is: ${GIT_BRANCH}_${GIT_COMMIT}"
         sh "sed -i 's/newTag:.*/newTag: ${GIT_BRANCH}_${GIT_COMMIT}/' kustomization.yaml"
-        sh '''
-            git config user.name "Jenkins"
-            git config user.email "jenkins@example.com"
-            git add .
-            git commit -m "Automated commit by Jenkins"
-            '''
         withCredentials([usernamePassword(credentialsId: 'ana-git-userpass', passwordVariable: 'GIT_PASSWORD', usernameVariable: 'GIT_USERNAME')]) {
           script {
               def commitStatus = sh(script: """
