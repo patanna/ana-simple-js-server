@@ -6,19 +6,12 @@ pipeline {
         kind: Pod
         spec:
           containers"":
-          - name: docker
-            image: docker:latest
+          - name: dind
+            image: dind:latest
             command:
             - cat
             # see what happens when cat is removed
             tty: true
-            volumeMounts:
-             - mountPath: /var/run/docker.sock
-               name: docker-sock
-          volumes:
-          - name: docker-sock
-            hostPath:
-              path: /var/run/docker.sock    
         '''
     }
 
@@ -39,7 +32,7 @@ pipeline {
     }
     stage('Build-Push-Docker-Image') {
       steps {
-        container('docker') {
+        container('dind') {
           script{
             withDockerRegistry(credentialsId: 'ana-docker'){
             docker.build('patanna/simple-nodejs-app').push("${GIT_BRANCH}_${GIT_COMMIT}")
@@ -83,7 +76,6 @@ pipeline {
               curl --insecure -o ./argocd https://${ARGOCD_SERVER}/download/argocd-linux-amd64
               chmod +x ./argocd
               ./argocd app sync ${ArgoApp} --insecure
-              ./argocd app wait ${ArgoApp} --insecure
               '''
           echo "Deployed with ArgoCD"
       }
