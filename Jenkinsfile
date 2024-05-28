@@ -8,6 +8,9 @@ pipeline {
           containers"":
           - name: docker
             image: docker:latest
+            command:
+            - cat
+            # see what happens when cat is removed
             tty: true
             volumeMounts:
              - mountPath: /var/run/docker.sock
