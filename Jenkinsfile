@@ -26,12 +26,14 @@ pipeline {
   environment {
     ArgoApp = 'ANA-SIMPLE-NODE-JS'
     ARGOCD_SERVER = '10.131.1.231:32766'
+    CODE_REPO = "https://github.com/patanna/ana-simple-js-server.git" 
+    MANIFEST_REPO = "https://github.com/patanna/ana-simple-nodejs-server-manifests.git" 
   }
 
   stages {
     stage('Checkout Code') {
             steps {
-              git branch: 'main', credentialsId: 'ana-git-userpass', url: 'https://github.com/patanna/ana-simple-js-server.git'
+              git branch: 'main', credentialsId: 'ana-git-userpass', url: "${CODE_REPO}"
             }
     }
     stage('Build-Push-Docker-Image') {
@@ -48,7 +50,7 @@ pipeline {
 
     stage('Get the image hash') {
       steps{
-        git branch: 'main', credentialsId: 'ana-git-userpass', url: 'https://github.com/patanna/ana-simple-nodejs-server-manifests.git'
+        git branch: 'main', credentialsId: 'ana-git-userpass', url: "${MANIFEST_REPO}"
         echo "Image hash is: ${GIT_BRANCH}_${GIT_COMMIT}"
         sh "sed -i 's/newTag:.*/newTag: ${GIT_BRANCH}_${GIT_COMMIT}/' kustomization.yaml"
         withCredentials([usernamePassword(credentialsId: 'ana-git-userpass', passwordVariable: 'GIT_PASSWORD', usernameVariable: 'GIT_USERNAME')]) {
@@ -58,13 +60,14 @@ pipeline {
                   git config user.email "jenkins@example.com"
                   git add .
                   git commit -m "Automated commit by Jenkins"
-                  git push"
+                  git remote set-url origin https://${GIT_USERNAME}:${GIT_PASSWORD}@github.com/patanna/ana-simple-nodejs-server-manifests.git
+                  git push origin main
               """, returnStatus: true)
 
               if (commitStatus != 0) {
                   echo "Nothing to commit, working tree clean"
               } else {
-                  echo "Changes committed successfully"
+                  echo "Changes committed and pushed successfully"
               }
           }
         }
