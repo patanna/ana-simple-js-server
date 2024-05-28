@@ -5,11 +5,9 @@ pipeline {
         apiVersion: v1
         kind: Pod
         spec:
-          containers:
+          containers"":
           - name: docker
             image: docker:latest
-            command:
-            - cat
             tty: true
             volumeMounts:
              - mountPath: /var/run/docker.sock
